@@ -1,0 +1,9 @@
+six
+numpy
+scipy
+django
+joblib
+pandas
+sklearn
+scikit-image
+Pillow
