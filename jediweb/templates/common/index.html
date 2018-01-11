@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h3 class="center">JEDI Data Collection</h3>
+        <nav>
+            <div class="nav-wrapper">
+                <ul class="left hide-on-med-and-down">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li class="active"><a href="collapsible.html">Link 3</a></li>
+                </ul>
+            </div>
+        </nav>
+        <hr>
+
+    </header>
+    <article class="content" style="min-height: 600px">
+        {% block content %}
+        {% endblock %}
+    </article>
+    <footer class="footer">
+        <hr>
+        <p class="center">STAR LAB @ Arizona State University.</p>
+    </footer>
+</div>
+<footer>
+
+</footer>
+
+</body>
+</html>
