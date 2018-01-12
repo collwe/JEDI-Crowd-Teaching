@@ -1,20 +1,19 @@
 {% extends 'common/index.html' %}
 {% block content %}
 
+    <div class="row">
+        <p id="timeLabel" class="float-right center">0</p>
+    </div>
     <ul id="items" class="row">
     </ul>
     <div class="row">
-        <button onclick="orderButtonClicked()" class="btn waves-effect waves-light col s2"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous</button>
-        <button onclick="orderButtonClicked()" class="btn waves-effect waves-light col s2 offset-s8">Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </button>
+        <a id="prevBtn" class="btn waves-effect waves-light col s2"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous</a>
+        <a id="nextBtn" href="{% url 'memory_images_test' %}" class="btn waves-effect waves-light col s2 offset-s8">Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
 
     </div>
 
     <script type="text/javascript">
-        var el = document.getElementById('items');
-        var sortable = Sortable.create(el);
-
-
         function orderButtonClicked() {
 
             var _li = []
@@ -26,6 +25,18 @@
             console.log(_li)
         }
 
+        function goToNextPage(){
+            console.log('Next page clicked..')
+            $('#nextBtn').get(0).click();
+        }
+
+        function updateTime(){
+
+            var timeVal = parseInt($('#timeLabel').text());
+            $('#timeLabel').text(timeVal+1)
+
+        }
+
         $(document).ready(
             $.getJSON('/memory/get_images', function (data) {
                 var images = data['images']
@@ -34,7 +45,14 @@
                         '<img src="https://s3-us-west-2.amazonaws.com/jediasu/' + images[i] + '" width="200px" height="200px"/>' +
                         '</li>')
                 }
+
+                console.log(images.length)
+                setInterval(goToNextPage,(images.length+2)*1000)
+
+                setInterval(updateTime, 1000)
             })
+
+
         );
     </script>
 {% endblock %}

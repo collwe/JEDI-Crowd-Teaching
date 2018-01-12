@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
-</head>
-<body>
-<header>
-
-</header>
+{% extends 'common/index.html' %}
+{% block content %}
 <div class="container">
 
     <ul id="items" class="row">
@@ -43,7 +30,7 @@
     }
 
     $(document).ready(
-        $.getJSON('/memory/show_images', function (data) {
+            $.getJSON('/memory/get_images_test', function (data) {
             var images = data['images']
             for (var i in images) {
                 $('#items').append('<li class="col s3" order="'+i+'">' +
@@ -53,5 +40,4 @@
         })
     );
 </script>
-</body>
-</html>
+{% endblock %}
