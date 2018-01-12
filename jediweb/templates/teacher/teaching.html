@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+
+<title>Visual Memory Test</title>
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'teacher/style.css' %}" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script>
+$(document).ready(function()
+{
+    var start = new Date().getTime();
+
+	$('#submit_button').click(function(){
+        if(!$("input[name='answer']:checked").val())
+        {
+            alert('Please make a choice.');
+            return false;
+        }
+        var elapsed = new Date().getTime() - start;
+        $('#input_form input[name="time"]').val(elapsed);
+    });
+
+});
+</script>
+
+</head>
+    
+<body>
+
+<div id="frame">
+
+    <div id="container">
+
+        <h3 style="font-weight:normal">Image {{ teaching_image_num }} / {{ num_teaching_images }}</br>
+        &nbsp</h3>
+
+        <div id="query_image_container">
+            <img id="query_image" src="{% static image_path %}" alt="Teaching Image"/>
+        </div>
+
+        <!-- THE FORM -->
+        <form id="input_form" method="post">
+
+            {% csrf_token %}
+
+            <!-- The radio buttons -->
+            {% for class_name in class_names %}
+                <label><input class="choice_input" type="radio" name="answer" value="{{ forloop.counter0 }}" />{{ class_name }}</label><br>
+            {% endfor %}
+
+            <!-- The hidden variables -->
+            <input type="hidden" name="mode" value="1" />
+            <input type="hidden" name="time" value="" />
+
+            <!-- The submit button -->
+            <input id="submit_button" type="submit" value="Submit"/>
+
+        </form>
+
+    </div>
+
+</div>
+    
+</body>
+
+</html>

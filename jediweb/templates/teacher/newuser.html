@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Machine Teaching</title>
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'teacher/style.css' %}" />
+
+</head> 
+
+<body>
+
+<div id="frame">
+    
+<div id="container">
+
+<h1>Machine Teaching</h1>
+    
+<div style="text-align:justify;margin:0;padding:0">
+        <p>
+            This is an automated system to teach you how to classify {{ num_classes }} a set of objects.
+        </p>
+        <p>
+            There are two stages:<br>
+            <ol>
+                <li>The computer will <b>teach you</b> what the images look like.</li>
+                <li>The computer will <b>test you</b> on your recognition ability.</li>
+            </ol>
+        </p>
+	<p>
+		After clicking Start, you will enter the Teaching Stage. Here, you will be shown a sequence of images. For each image, select your best estimate of its label. You will then be given feedback on your answer. At the start, you will have to guess, but over time you should learn from the computer's feedback. After the Teaching Stage has finished, you will enter the Testing Stage.
+        <p>
+            Please press <b>Start</b> below to begin.
+        </p>
+
+</div>
+
+<form id="start_form" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="mode" value="0" />
+    <input id="start_button" type="submit" value="Start" style="margin-top:10px"/>
+</form>
+
+<br><br><br><br><br><br><br><br>
+<p>
+This teaching algorithm and web interface were developed by Edward Johns, Oisin Mac Aodha and Gabriel Brostow at University College London. For further details, contact Ed at <a href="mailto:e.johns@imperial.ac.uk">e.johns@imperial.ac.uk</a> or visit <a href="http://visual.cs.ucl.ac.uk/pubs/interactiveMachineTeaching/">http://visual.cs.ucl.ac.uk/pubs/interactiveMachineTeaching/</a>.
+</p>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

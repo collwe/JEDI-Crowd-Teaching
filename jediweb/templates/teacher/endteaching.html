@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Visual Memory Test</title>
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'teacher/style.css' %}" />
+
+</head>
+
+<body>
+
+<div id="frame">
+
+    <div id="container">
+
+        <h1>End of Teaching</h1>
+
+	<div style="text-align:justify;margin-left:150px;padding:0">
+
+        <p>You will now be tested on your recognition stills.</p>
+        <p>{{ num_testing_images }} images will be shown to you.</p>
+        <p>There will be no feedback until the end of the test.</p>
+	<p>Good luck!</p>
+
+	</div>
+
+        <!-- THE FORM -->
+        <form id='choice_form' method="post">
+
+            {% csrf_token %}
+
+            <!-- The hidden variables -->
+            <input type="hidden" name="mode" value="3"/>
+
+            <!-- The submit button -->
+            <input id="next_button" type="submit" value="Begin"/>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

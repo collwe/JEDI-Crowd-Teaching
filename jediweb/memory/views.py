@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.http import JsonResponse
 import numpy as np
@@ -26,27 +26,30 @@ _images = ['033b7c459edd347e83e7f6d7dec1dfa1_resize.jpg',
           'b4ba6282627a0ce39ac33d1b802f4c3c_resize.jpg',
           'liangyue_dc (30)_resize.jpg',
           'liangyue_dc (3)_resize.jpg',
-          'liangyue_dc (4)_resize.jpg',
           'liangyue_wc (1)_resize.jpg']
 
 def home(request):
   return render(request,'memory/index.html')
 
-def images(request):
-  return render(request,'memory/images.html')
+def images(request,n_img=2):
+
+  n_img_i = int(n_img)
+  data = {}
+  data['n_img'] = n_img;
+  return render(request,'memory/images.html', data)
 
 
 
 def images_test(request):
   return render(request,'memory/images_test.html')
 
-def get_images(request, n_images=6):
+def get_images(request, n_img=2):
 
   data = {}
-
+  n_img_i = int(n_img)
   imgs = list(range(len(_images)))
   np.random.shuffle(imgs)
-  imgs = imgs[:n_images]
+  imgs = imgs[:n_img_i]
 
   # Save the images to session.
   request.session['ORDER_IMGS'] = imgs
@@ -60,6 +63,9 @@ def get_images(request, n_images=6):
 
 def get_images_test(request):
     imgs = request.session['ORDER_IMGS']
+
+    np.random.shuffle(imgs)
+
     data = {}
     data['images'] = [_images[i] for i in imgs]
     return JsonResponse(data)
@@ -67,3 +73,27 @@ def get_images_test(request):
 
 
 
+def check_order(request):
+  imgs = request.session['ORDER_IMGS']
+  presented_order = [_images[i] for i in imgs]
+
+  print(request.POST)
+  provided_order = request.POST.getlist('items[]')
+  data = {}
+  n_imgs = len(presented_order)
+
+  if(presented_order == provided_order):
+
+    if n_imgs <= 10:
+      n_imgs = len(presented_order)+1
+      data['redirect_url'] = reverse('memory_images',kwargs= {'n_img':'%0.2d'%(n_imgs)})
+  else:
+
+    request.session['USER_MEMORY'] = n_imgs
+    data['redirect_url'] = reverse('memory_completed')
+
+  return JsonResponse(data)
+
+
+def completed(request):
+  return render(request,'memory/completed.html')

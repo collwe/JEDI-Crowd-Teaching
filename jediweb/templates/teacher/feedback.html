@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+
+<title>Visual Memory Test</title>
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'teacher/style.css' %}" />
+
+</head>
+    
+<body>
+
+<div id="frame">
+
+    
+<div id="container">
+
+<h3 style="font-weight:normal">
+    {% if is_correct == True %}
+        <font color="green"><b>Correct!</b></font><br>
+        <font color="black">This is indeed <b>{{ true_class_name }}</b>.</font>
+    {% else %}
+        <font color="red"><b>Incorrect!</b></font><br>
+        <font color="black">This is in fact <b>{{ true_class_name }}</b>, not {{ answer_class_name }}.</font>
+    {% endif %}
+</h3>
+
+<div id="query_image_container">
+<img id="query_image" src="{% static image_path %}" alt="Testing Image" />
+    </div>
+
+        <form id="input_form" method="post">
+            {% csrf_token %}
+		{% for class_name in class_names %}
+
+		<label><input class="choice_input" type="radio" style="visibility: hidden"/></label><br>
+
+		{% endfor %}
+            <input type="hidden" name="mode" value="2" />
+            <input id = "submit_button" type="submit" value="Next" />
+        </form>
+
+    </div>
+
+</div>
+    
+</body>
+
+</html>

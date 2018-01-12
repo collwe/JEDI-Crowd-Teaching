@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Visual Memory Test</title>
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'teacher/style.css' %}" />
+
+</head>
+
+<body>
+
+<div id="frame">
+
+<div id="container">
+
+<h1>End of Testing</h1>
+
+<h2>Your score is: <b>{{ score }} / {{ num_testing_images }}</b></h2>
+
+<h2>The average score is: <b>{{ ave_score|floatformat:2 }} / {{ num_testing_images }}</b></h2>
+
+<br><br><br><br><br><br><br><br>
+<p>
+This teaching algorithm and web interface were developed by Edward Johns, Oisin Mac Aodha and Gabriel Brostow at University College London. For further details, contact Ed at <a href="mailto:e.johns@imperial.ac.uk">e.johns@imperial.ac.uk</a> or visit <a href="http://visual.cs.ucl.ac.uk/pubs/interactiveMachineTeaching/">http://visual.cs.ucl.ac.uk/pubs/interactiveMachineTeaching/</a>.
+</p>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

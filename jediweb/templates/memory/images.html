@@ -2,7 +2,7 @@
 {% block content %}
 
     <div class="row">
-        <p id="timeLabel" class="float-right center">0</p>
+        <div class="col s12">Timer: <span id="timeLabel" class="float-right center">0</span> seconds.</div>
     </div>
     <ul id="items" class="row">
     </ul>
@@ -33,12 +33,12 @@
         function updateTime(){
 
             var timeVal = parseInt($('#timeLabel').text());
-            $('#timeLabel').text(timeVal+1)
+            $('#timeLabel').text(timeVal-1)
 
         }
 
         $(document).ready(
-            $.getJSON('/memory/get_images', function (data) {
+            $.getJSON('/memory/get_images/{{ n_img }}', function (data) {
                 var images = data['images']
                 for (var i in images) {
                     $('#items').append('<li class="col s3" order="' + i + '">' +
@@ -47,8 +47,8 @@
                 }
 
                 console.log(images.length)
-                setInterval(goToNextPage,(images.length+2)*1000)
-
+                setInterval(goToNextPage,(images.length)*1000)
+                $('#timeLabel').text(images.length)
                 setInterval(updateTime, 1000)
             })
 

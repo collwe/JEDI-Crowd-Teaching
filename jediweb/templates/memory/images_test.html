@@ -1,13 +1,13 @@
 {% extends 'common/index.html' %}
 {% block content %}
-<div class="container">
 
-    <ul id="items" class="row">
-    </ul>
+<ul id="items" class="row">
+</ul>
 
+<div class="row">
+    <button id="nextBtn" onclick="orderButtonClicked()" class="btn waves-effect waves-light col s2 offset-s10">Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
 </div>
 
-<button onclick="orderButtonClicked()">Re Order</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -17,25 +17,31 @@
     var el = document.getElementById('items');
     var sortable = Sortable.create(el);
 
-
     function orderButtonClicked() {
 
         var _li = []
         $('#items').children().each(function () {
             var _obj = $(this)
-            _li.push(_obj.attr('order'))
+            console.log(_obj)
+            _li.push(_obj.attr('data-id'))
         })
 
         console.log(_li)
+
+        $.post('/memory/check_order/', { 'items':_li, 'csrfmiddlewaretoken': '{{csrf_token}}'}, function (data) {
+            console.log(data)
+
+            window.location.replace(data['redirect_url']);
+        }, "json")
     }
 
     $(document).ready(
             $.getJSON('/memory/get_images_test', function (data) {
             var images = data['images']
             for (var i in images) {
-                $('#items').append('<li class="col s3" order="'+i+'">' +
-                    '<img src="https://s3-us-west-2.amazonaws.com/jediasu/' + images[i] + '" width="200px" height="200px"/>' +
-                    '</li>')
+                      $('#items').append('<li data-id="'+images[i]+'" class="col s3" order="' + i + '">' +
+                        '<img src="https://s3-us-west-2.amazonaws.com/jediasu/' + images[i] + '" width="200px" height="200px"/>' +
+                        '</li>')
             }
         })
     );

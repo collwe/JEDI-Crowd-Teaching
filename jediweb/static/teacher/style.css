@@ -1,0 +1,183 @@
+/* Common */
+
+
+body
+{
+	margin:0px;
+	padding:0px;
+	background: url(background.jpg);
+	background-repeat: repeat-x repeat-y;
+	color: rgb(0,0,0);
+	font-family: "Palatino Linotype", "Times New Roman";
+	font-size:12pt;
+}
+
+div#frame
+{
+	margin: 20px auto;
+	padding: 0px;
+	overflow: auto; /* This prevents the top margin from collapsing */
+	width: 750px;
+	height: 900px;
+	background: rgb(255, 255, 255);
+    box-shadow: 10px 10px 10px rgb(100, 100, 100)
+}
+
+div#container
+{
+	margin: 50px;
+}
+
+h1
+{
+	margin:15px;
+	padding:0px;
+	text-align:center;
+}
+
+h2
+{
+	margin:10px;
+	padding:0px;
+	text-align:center;
+}
+
+h3
+{
+	margin:10px;
+	padding:0px;
+	text-align:center;
+}
+
+input[type="submit"]
+{
+	-moz-box-shadow: 3px 3px 0px 0px rgb(20,20,20);
+	-webkit-box-shadow: 3px 3px 0px 0px rgb(20,20,20);
+	box-shadow: 3px 3px 0px 0px rgb(20,20,20);
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, rgb(20,20,20)), color-stop(1, rgb(100,100,100)));
+	background:-moz-linear-gradient(top, rgb(20,20,20) 5%, rgb(100,100,100) 100%);
+	background:-webkit-linear-gradient(top, rgb(20,20,20) 5%, rgb(100,100,100) 100%);
+	background:-o-linear-gradient(top, rgb(20,20,20) 5%, rgb(100,100,100) 100%);
+	background:-ms-linear-gradient(top, rgb(20,20,20) 5%, rgb(100,100,100) 100%);
+	background:linear-gradient(to bottom, rgb(20,20,20) 5%, rgb(100,100,100) 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=rgb(20,20,20), endColorstr=rgb(100,100,100),GradientType=0);
+	background-color: rgb(20,20,20);
+	cursor:pointer;
+	color: rgb(255,255,255);
+	text-decoration:none;
+	text-shadow:0px 1px 0px rgb(100,100,100);
+    border: 0;
+    display: block;
+    margin: 10px auto;
+    font-size:20px;
+	width: 80px;
+    height: 40px;
+    -moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	border-radius:20px;
+	font-family: Andalus, Constantia, "Palatino Linotype", "Times New Roman";
+}
+
+    input[type="submit"]:hover:not([disabled])
+    {
+	    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, rgb(20,20,20)), color-stop(1, rgb(20,20,20)));
+	    background:-moz-linear-gradient(top, rgb(100,100,100) 5%, rgb(20,20,20) 100%);
+	    background:-webkit-linear-gradient(top, rgb(100,100,100) 5%, rgb(20,20,20) 100%);
+	    background:-o-linear-gradient(top, rgb(100,100,100) 5%, rgb(20,20,20) 100%);
+	    background:-ms-linear-gradient(top, rgb(100,100,100) 5%, rgb(20,20,20) 100%);
+	    background:linear-gradient(to bottom, rgb(100,100,100) 5%, rgb(20,20,20) 100%);
+	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(100,100,100)', endColorstr='rgb(20,20,20)',GradientType=0);
+	    background-color:rgb(100,100,100);
+        border: 0;
+    }
+
+    input[type="submit"]:active:not([disabled])
+    {
+	    position:relative;
+	    top:1px;
+        left:1px;
+        -moz-box-shadow: 2px 2px 0px 0px rgb(20,20,20);
+	    -webkit-box-shadow: 2px 2px 0px 0px rgb(20,20,20);
+	    box-shadow: 2px 2px 0px 0px rgb(20,20,20);
+        border: 0;
+    }
+
+    input[type="submit"]:disabled
+    {
+        -moz-box-shadow: 3px 3px 0px 0px rgb(100,100,100);
+        -webkit-box-shadow: 3px 3px 0px 0px rgb(100,100,100);
+        box-shadow: 3px 3px 0px 0px rgb(100,100,100);
+	    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, rgb(200,200,200)), color-stop(1, rgb(150,150,150)));
+	    background:-moz-linear-gradient(top, rgb(200,200,200) 5%, rgb(150,150,150) 100%);
+	    background:-webkit-linear-gradient(top, rgb(200,200,200) 5%, rgb(150,150,150) 100%);
+	    background:-o-linear-gradient(top, rgb(200,200,200) 5%, rgb(150,150,150) 100%);
+	    background:-ms-linear-gradient(top, rgb(200,200,200) 5%, rgb(150,150,150) 100%);
+	    background:linear-gradient(to bottom, rgb(200,200,200) 5%, rgb(150,150,150) 100%);
+	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(200,200,200)', endColorstr='rgb(150,150,150)',GradientType=0);
+	    background-color:rgb(200,200,200);
+        border: 0;
+    }
+
+
+div#query_image_container
+{
+    margin:0 auto;
+}
+
+
+/* Home */
+
+form#start_form
+{
+	width:200px;
+	margin: 25px auto;
+    text-align:center;
+}
+
+
+/* Testing */
+
+img#query_image
+{
+	display:block;
+	margin:0px auto;
+	padding:0;
+	height:200px;
+}
+
+form#input_form
+{
+    width:150px;
+	margin: 10px auto;
+	padding: 0
+    text-align:left;
+}
+
+form#end_form
+{
+    width:300px;
+	margin: 10px auto;
+	padding: 0
+    text-align:left;
+}
+
+input.choice_input
+{
+	margin: 5px;
+}
+
+input#answer_submit
+{
+    display:block;
+    margin:10px auto;
+}
+
+
+/* Ability page */
+
+form#ability_form
+{
+    width:200px;
+	margin: 10px auto;
+    text-align:left;
+}

@@ -20,4 +20,5 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('memory/', include('memory.urls')),
+    url('teacher/', include('teacher.urls'))
 ]
