@@ -8,61 +8,62 @@ mu2 = .6*ones(10,1);
 sigma1 = diag(round(rand(d,1)*10)); 
 numData = 1000;
 
-accu_LR = 0;
-count = 0;
-while accu_LR < 0.80 || accu_LR >= 0.95 % quality control of the generated data
-    if count ~= 0
-        fprintf('Random Guassian Data Generation # %d, accu_LR = %.2f...\n', count, accu_LR);
-    end
-    [D, Y] = gaussianData(mu1, mu2, sigma1, numData);
-    
-    % split into teaching set and evaluation set
-    ratio = 0.2;
-    randidx = randperm(numData*2);
-    tidx = randidx(1:floor(numData*2*ratio))';
-    eidx = setdiff(1:numData*2, tidx)';
+% accu_LR = 0;
+% count = 0;
+% while accu_LR < 0.80 || accu_LR >= 0.95 % quality control of the generated data
+%     if count ~= 0
+%         fprintf('Random Guassian Data Generation # %d, accu_LR = %.2f...\n', count, accu_LR);
+%     end
+%     [D, Y] = gaussianData(mu1, mu2, sigma1, numData);
+%     
+%     % split into teaching set and evaluation set
+%     ratio = 0.2;
+%     randidx = randperm(numData*2);
+%     tidx = randidx(1:floor(numData*2*ratio))';
+%     eidx = setdiff(1:numData*2, tidx)';
+% 
+%     % learn the target concept w* on teaching set
+%     pathPRML = 'PRML/code';
+%     addpath(genpath(pathPRML));
+% 
+%     X = D(tidx,1:d)';
+%     [model, llh] = logitBin(X,(Y(tidx)'+1)/2);
+%     [y, p] = logitBinPred(model, X);
+%     pred_LR = y == ((Y(tidx)'+1)/2);
+%     accu_LR = sum(pred_LR)/length(y);
+%     wo_LR = model.w;
+%     
+%     count = count+1;
+%     rmpath(genpath(pathPRML))
+% end
+% % teaching set
+% Dt = D(tidx,:); Yt = Y(tidx);
+% % evaluation set
+% De = D(eidx,:); Ye = Y(eidx);
+% 
+% %% generate the Affinity matrix A of the teaching set
+% X = Dt(:,1:d);
+% Xnorm = X./repmat(diag(sqrt(sigma1))',length(tidx),1);
+% [Edgeidx, Dist] = knnsearch(Xnorm, Xnorm, 'K', 11, 'IncludeTies', true);
+% 
+% fcn = @removeFirst; % remove the NN of node itself
+% Edgeidx =  cellfun(fcn, Edgeidx, 'UniformOutput', false);
+% Dist =  cellfun(fcn, Dist, 'UniformOutput', false);
+% 
+% fcn2 = @(x) exp(-1*x.^2); % from ICML 04 Harmonic paper
+% Dist = cellfun(fcn2, Dist, 'UniformOutput', false);
+% [NodesS, NodesT, EdgeWeights] = generateEdgeTable(Edgeidx, Dist);
+% 
+% A = full(sparse(NodesS, NodesT, EdgeWeights, length(tidx), length(tidx)));
+% A = A + A';
+% 
+% % show the distance matrix plot of Dt, Yt
+% tpos = find(Yt == 1);
+% tneg = find(Yt == -1);
+% W = A([tpos; tneg], [tpos; tneg]);
+% figure;imshow(W ~= 0,[])
 
-    % learn the target concept w* on teaching set
-    pathPRML = 'PRML/code';
-    addpath(genpath(pathPRML));
-
-    X = D(tidx,1:d)';
-    [model, llh] = logitBin(X,(Y(tidx)'+1)/2);
-    [y, p] = logitBinPred(model, X);
-    pred_LR = y == ((Y(tidx)'+1)/2);
-    accu_LR = sum(pred_LR)/length(y);
-    wo_LR = model.w;
-    
-    count = count+1;
-    rmpath(genpath(pathPRML))
-end
-% teaching set
-Dt = D(tidx,:); Yt = Y(tidx);
-% evaluation set
-De = D(eidx,:); Ye = Y(eidx);
-
-%% generate the Affinity matrix A of the teaching set
-X = Dt(:,1:d);
-Xnorm = X./repmat(diag(sqrt(sigma1))',length(tidx),1);
-[Edgeidx, Dist] = knnsearch(Xnorm, Xnorm, 'K', 11, 'IncludeTies', true);
-
-fcn = @removeFirst; % remove the NN of node itself
-Edgeidx =  cellfun(fcn, Edgeidx, 'UniformOutput', false);
-Dist =  cellfun(fcn, Dist, 'UniformOutput', false);
-
-fcn2 = @(x) exp(-1*x.^2); % from ICML 04 Harmonic paper
-Dist = cellfun(fcn2, Dist, 'UniformOutput', false);
-[NodesS, NodesT, EdgeWeights] = generateEdgeTable(Edgeidx, Dist);
-
-A = full(sparse(NodesS, NodesT, EdgeWeights, length(tidx), length(tidx)));
-A = A + A';
-
-% show the distance matrix plot of Dt, Yt
-tpos = find(Yt == 1);
-tneg = find(Yt == -1);
-W = A([tpos; tneg], [tpos; tneg]);
-figure;imshow(W ~= 0,[])
-
+load matlab.mat
 
 %% GENERATE LEARNERS and JEDI TEACHING
 maxIter = 600;
@@ -80,8 +81,10 @@ numLearner = length(Beta);
 fvalue_JEDI = zeros(maxIter,numLearner);
 teachingSetJEDI = zeros(maxIter,numLearner);
 
-w0 = (-1 + rand(d+1,1)*2) .* ones(d+1,1);
-selectIdxFirst = randperm(length(Yt),1);
+%w0 = (-1 + rand(d+1,1)*2) .* ones(d+1,1);
+load w0.mat
+
+selectIdxFirst = 390 %randperm(length(Yt),1);
 for il = 1:numLearner
     beta = Beta(il);
 %     w0 = (-1 + rand(d+1,1)*2) .* ones(d+1,1);

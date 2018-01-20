@@ -1,0 +1,19 @@
+{% extends 'common/index.html' %}
+{% block content %}
+    <h4>Machine Teaching</h4>
+    <p> This is an automated system to teach you how to classify a set of images.</p>
+    <p>There are two stages:</p>
+    <ol>
+        <li>The computer will teach you what the images look like.</li>
+        <li>The computer will test you on your recognition ability.</li>
+    </ol>
+
+    <p>After clicking Start, you will enter the Teaching Stage. Here, you will be shown a sequence of images. For each
+        image, select your best estimate of its label. You will then be given feedback on your answer. At the start, you
+        will have to guess, but over time you should learn from the computer's feedback. After the Teaching Stage has
+        finished, you will enter the Testing Stage. </p>
+
+    <a href="{% url 'jedi_teacher_play' %}" class="btn btn-primary">Start</a>
+
+    <p></p>
+{% endblock %}

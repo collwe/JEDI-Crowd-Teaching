@@ -33,12 +33,16 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'memory.apps.MemoryConfig',
     'teacher.apps.TeacherConfig',
+    'jediteacher.apps.JediteacherConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'captcha',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +128,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ALLOWED_HOSTS = ['jedi.localtunnel.me', '127.0.0.1']
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'jediweb.backends.HashModelBackend',
+]
+
+handler400 = 'memory.views.error'

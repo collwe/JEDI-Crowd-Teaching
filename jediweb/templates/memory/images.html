@@ -42,7 +42,7 @@
                 var images = data['images']
                 for (var i in images) {
                     $('#items').append('<li class="col s3" order="' + i + '">' +
-                        '<img src="https://s3-us-west-2.amazonaws.com/jediasu/' + images[i] + '" width="200px" height="200px"/>' +
+                        '<img src="https://s3-us-west-2.amazonaws.com/jediasu/memory/' + images[i] + '" width="200px" height="200px"/>' +
                         '</li>')
                 }
 
@@ -51,8 +51,6 @@
                 $('#timeLabel').text(images.length)
                 setInterval(updateTime, 1000)
             })
-
-
         );
     </script>
 {% endblock %}

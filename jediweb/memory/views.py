@@ -1,93 +1,130 @@
-from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse
-from django.http import JsonResponse
 import numpy as np
+from django.contrib.auth import authenticate, login
 # Create your views here.
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, reverse
+from rest_framework.authtoken.models import Token
 
-_images = ['033b7c459edd347e83e7f6d7dec1dfa1_resize.jpg',
-          '0bfcdf84e1cea32bf72a8cebd2dd3ecb_resize.jpg',
-          '1eac0616da1d7b1fdaef4603694b8e30_resize.jpg',
-          '272529824_ff1ee57e46_resize.jpg',
-          '353f62a12c2d273e28abfa26da28385e_resize.jpg',
-          '361775749_1e1f2f55bb_resize.jpg',
-          '36da7c2c488add749d4eb7692efebf3f_resize.jpg',
-          '382f00de93ed4565983f5f2f969fbcb7_resize.jpg',
-          '40e8e92273d6e018d336568d754d28e2_resize.jpg',
-          '47fa2a8868f4876fb6a1fa97f7a6a29b_resize.jpg',
-          '5ac631bff1d4fe013e747c8b1f9a25f9_resize.jpg',
-          '66f7cbeee2f762267d9e50c449bdc9c2_resize.jpg',
-          '77d504505cc5ce7c620d2e5731ea3337_resize.jpg',
-          '7d2fd4b6f3eced8f94085d28e960273a_resize.jpg',
-          '7f80ceddd1f95f322b86e429fb7f4d69_resize.jpg',
-          '84367a63f8dcf536981ea28312c4b3a6_resize.jpg',
-          '8b0c389b3060f8dd4880f0c6eae9d20c_resize.jpg',
-          '8bc14d78ac1221800779341a4ab487dc_resize.jpg',
-          '938413b23f23ccd45f4bb774707fea8d_resize.jpg',
-          'b4ba6282627a0ce39ac33d1b802f4c3c_resize.jpg',
-          'liangyue_dc (30)_resize.jpg',
-          'liangyue_dc (3)_resize.jpg',
-          'liangyue_wc (1)_resize.jpg']
+from .forms import UserForm
+from .models import MemoryImages, MemoryTest
 
-def home(request):
-  return render(request,'memory/index.html')
 
-def images(request,n_img=2):
+def register(request):
+  if request.POST:
+    form = UserForm(request.POST)
 
-  n_img_i = int(n_img)
+    # Validate the form: the captcha field will automatically
+    # check the input
+    if form.is_valid():
+      human = True
+
+      user = User()
+      user.first_name = form.cleaned_data['name']
+      user.last_name = form.cleaned_data['affiliation']
+      user.email = form.cleaned_data['email']
+      user.username = form.cleaned_data['email']
+      user.save()
+
+      token, created = Token.objects.get_or_create(user=user)
+
+
+      # Save the details.
+
+  else:
+    form = UserForm()
+
+  data = {}
+  data['form'] = form
+  return render(request, 'memory/index.html', data)
+
+
+def home(request, token):
+  # Login/ Authenticate user using a token.
+
+  user = authenticate(token)
+  if user is not None:
+    login(request, user)
+    print('User successfully logged in.')
+    return redirect('memory_start')
+  else:
+    return render(request, 'common/error.html')
+
+
+def start(request):
+  print(request.user)
+  data = {}
+  data['show_memory_nav'] = True
+  return render(request, 'memory/start.html', data)
+
+
+def images(request, n_img=2):
   data = {}
   data['n_img'] = n_img;
-  return render(request,'memory/images.html', data)
-
+  data['show_memory_nav'] = True
+  return render(request, 'memory/images.html', data)
 
 
 def images_test(request):
-  return render(request,'memory/images_test.html')
+  data = {}
+  data['show_memory_nav'] = True
+  return render(request, 'memory/images_test.html', data)
+
 
 def get_images(request, n_img=2):
+  n_imgs = 80
+  img_idx = []
+  images = []
+  for i in range(int(n_img)):
+    rand_int = np.random.random_integers(0, n_imgs, 1)[0]
+    while rand_int in img_idx:
+      rand_int = np.random.random_integers(0, n_imgs, 1)[0]
 
-  data = {}
-  n_img_i = int(n_img)
-  imgs = list(range(len(_images)))
-  np.random.shuffle(imgs)
-  imgs = imgs[:n_img_i]
+    img_idx.append(int(rand_int))
+    img = MemoryImages.objects.get(id=rand_int)
+    images.append(img.file_name)
 
   # Save the images to session.
-  request.session['ORDER_IMGS'] = imgs
-  print(imgs)
+  request.session['ORDER_IMGS'] = img_idx
+  request.session['ORDER_IMG_NAMES'] = images
 
-  data['images'] = [_images[i] for i in imgs]
+  data = {}
+  data['images'] = images
 
   return JsonResponse(data)
 
 
-
 def get_images_test(request):
-    imgs = request.session['ORDER_IMGS']
+  imgs = request.session['ORDER_IMGS']
+  np.random.shuffle(imgs)
+  images = []
+  for i in imgs:
+    img = MemoryImages.objects.get(id=i)
+    images.append(img.file_name)
 
-    np.random.shuffle(imgs)
+  data = {}
+  data['images'] = images
 
-    data = {}
-    data['images'] = [_images[i] for i in imgs]
-    return JsonResponse(data)
-
-
+  return JsonResponse(data)
 
 
 def check_order(request):
-  imgs = request.session['ORDER_IMGS']
-  presented_order = [_images[i] for i in imgs]
-
-  print(request.POST)
+  imgs = request.session['ORDER_IMG_NAMES']
   provided_order = request.POST.getlist('items[]')
+
   data = {}
-  n_imgs = len(presented_order)
+  n_imgs = len(imgs)
 
-  if(presented_order == provided_order):
-
+  if (imgs == provided_order):
     if n_imgs <= 10:
-      n_imgs = len(presented_order)+1
-      data['redirect_url'] = reverse('memory_images',kwargs= {'n_img':'%0.2d'%(n_imgs)})
+      n_imgs = len(imgs) + 1
+      data['redirect_url'] = reverse('memory_images', kwargs={'n_img': '%d' % (n_imgs)})
   else:
+
+    memoryTest = MemoryTest()
+    memoryTest.user = request.user
+    memoryTest.score = n_imgs
+    memoryTest.save()
 
     request.session['USER_MEMORY'] = n_imgs
     data['redirect_url'] = reverse('memory_completed')
@@ -96,4 +133,37 @@ def check_order(request):
 
 
 def completed(request):
-  return render(request,'memory/completed.html')
+  data = {}
+  data['show_memory_nav'] = True
+
+  memoryTest = MemoryTest.objects.filter(user=request.user).all()
+  trials = len(memoryTest)
+
+  data['trials'] = trials
+
+  if trials < 3:
+    next_url = '/memory/images/2'
+  else:
+    next_url = '/memory/score'
+
+  data['next_url'] = next_url
+
+  return render(request, 'memory/completed.html',data)
+
+
+def score(request):
+
+
+  memoryTest = MemoryTest.objects.filter(user=request.user).all()
+
+  score = 0
+  for mem in memoryTest:
+    score += mem.score
+
+  score = score/3.0
+
+  data = {}
+  data['score'] = "%0.2f"%score
+
+
+  return render(request, 'memory/score.html',data)

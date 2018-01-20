@@ -1,0 +1,36 @@
+{% extends 'common/index.html' %}
+{% block content %}
+    <br><br>
+    <div class="row">
+        <div class="col s4 offset-s4">
+            <img src="https://s3-us-west-2.amazonaws.com/jediasu/img/{{ image }}.jpg"
+                 alt=""
+                 class="z-depth-2"
+                 style="border:3px solid #000000;"
+                 >
+        </div>
+    </div>
+    <div class="row">
+        <form action="{% url 'jedi_teacher_feedback' %}" method="post">
+            <div class="col s4 offset-s4">
+                <div class="row">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="hidden" value="{{ image_id }}" name="image_id">
+                </div>
+            </div>
+            <div class="col s2 offset-s5">
+                <input type="submit" value="Next" class="btn btn-primary center-align">
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_label > li').each(function () {
+                $(this).addClass('col s6')
+            })
+        })
+    </script>
+
+{% endblock %}

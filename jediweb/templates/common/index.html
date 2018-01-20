@@ -14,19 +14,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+
+    <style type="text/css">
+        [type="radio"]:not(:checked), [type="radio"]:checked {
+            opacity: 1;
+            position: relative;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #000000;
+        }
+        ul.errorlist > li{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <header class="header">
         <h3 class="center">JEDI Data Collection</h3>
-        <nav>
-            <div class="nav-wrapper">
-                <ul class="left hide-on-med-and-down">
-                    <li><a href="{%  url 'memory_images' '02' %}">Start</a></li>
-                    <li class="active"><a href="collapsible.html">Link 3</a></li>
-                </ul>
-            </div>
-        </nav>
+        {% if show_memory_nav %}
+            <nav>
+                <div class="nav-wrapper">
+                    <ul class="left hide-on-med-and-down">
+                        <li><a href="{%  url 'memory_images' '2' %}">Trial 01</a></li>
+                        <li><a href="{%  url 'memory_images' '2' %}">Trial 02</a></li>
+                        <li><a href="{%  url 'memory_images' '2' %}">Trial 03</a></li>
+                    </ul>
+                </div>
+            </nav>
+        {% endif %}
         <hr>
 
     </header>
@@ -36,7 +57,7 @@
     </article>
     <footer class="footer">
         <hr>
-        <p class="center">STAR LAB @ Arizona State University.</p>
+        <p class="center-align">STAR LAB @ Arizona State University.</p>
     </footer>
 </div>
 <footer>

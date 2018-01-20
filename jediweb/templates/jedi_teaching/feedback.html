@@ -1,0 +1,27 @@
+{% extends 'common/index.html' %}
+{% block content %}
+    <br><br>
+    <div class="row">
+        <div class="col s4 offset-s4">
+            <img src="https://s3-us-west-2.amazonaws.com/jediasu/img/{{ image }}.jpg"
+                 alt=""
+                 class="z-depth-2"
+                 style="border:3px solid #000000;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <p class="center-align">
+                {% if correct %}
+                    <i class="fa fa-5x fa-check-circle-o center-align green-text" aria-hidden="true"></i>
+                {% else %}
+                    <i class="fa fa-5x fa-times-circle-o center-align red-text" aria-hidden="true"></i>
+                {% endif %}
+            </p>
+            <p class="center-align">{{ answer }}</p>
+        </div>
+        <div class="col s2 offset-s5 text-center">
+            <a href="{% url 'jedi_teacher_play' %}" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+{% endblock %}
