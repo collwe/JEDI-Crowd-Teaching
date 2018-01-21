@@ -7,10 +7,10 @@
     <ul id="items" class="row">
     </ul>
     <div class="row">
-        <a id="prevBtn" class="btn waves-effect waves-light col s2"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous</a>
-        <a id="nextBtn" href="{% url 'memory_images_test' %}" class="btn waves-effect waves-light col s2 offset-s8">Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </a>
-
+        <a id="prevBtn" class="btn waves-effect waves-light col s2"><i class="fa fa-chevron-left"
+                                                                       aria-hidden="true"></i> Previous</a>
+        <a id="nextBtn" href="{% url 'memory_images_test' %}" class="btn waves-effect waves-light col s2 offset-s8">Next
+            <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
     </div>
 
     <script type="text/javascript">
@@ -25,15 +25,15 @@
             console.log(_li)
         }
 
-        function goToNextPage(){
+        function goToNextPage() {
             console.log('Next page clicked..')
             $('#nextBtn').get(0).click();
         }
 
-        function updateTime(){
+        function updateTime() {
 
             var timeVal = parseInt($('#timeLabel').text());
-            $('#timeLabel').text(timeVal-1)
+            $('#timeLabel').text(timeVal - 1)
 
         }
 
@@ -47,7 +47,7 @@
                 }
 
                 console.log(images.length)
-                setInterval(goToNextPage,(images.length)*1000)
+                setInterval(goToNextPage, (images.length) * 1000)
                 $('#timeLabel').text(images.length)
                 setInterval(updateTime, 1000)
             })

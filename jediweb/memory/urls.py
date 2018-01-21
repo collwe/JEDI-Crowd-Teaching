@@ -5,7 +5,7 @@ from .views import *
 urlpatterns = [
   url(r'^index/$', register, name='memory_index'),
   url(r'^home/(?P<token>[\w\.-]+)/$', home, name='memory_home'),
-  url(r'^start/(?P<token>[\w\.-]+)/$', home, name='memory_start'),
+  url(r'^start/$', start, name='memory_start'),
   # url(r'^images/', images, name='memory_images'),
   url(r'^images/(?P<n_img>[0-9]{1})/', images, name='memory_images'),
   url(r'^images_test/', images_test, name='memory_images_test'),

@@ -137,3 +137,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 handler400 = 'memory.views.error'
+
+import scipy.io as sio
+
+DATASET = {}
+DATASET['Cat'] = sio.loadmat('../data/data_cat_JEDI_full_forArun.mat')
+DATASET['Horse'] = sio.loadmat('../data/data_horse_JEDI_full_forArun.mat')
+DATASET['Dog'] = sio.loadmat('../data/data_dog_JEDI_full_forArun.mat')
+
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'arunreddy'
+EMAIL_HOST_PASSWORD = 'eikaf2Za'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'jedi@asu.edu'

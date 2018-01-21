@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-
+import numpy as np
 from .forms import LabelForm
 from .jedi_helper import get_next
 from .models import JediImages, UserLabels
+from memory.models import MemoryTest
 
 
 def index(request):
@@ -26,25 +27,49 @@ def start(request, token):
     login(request, user)
 
     # Setup.
-    category = 'Horse'
-    n_teaching = 5
-    n_test = 5
+    category = 'Cat'
+    n_teaching = 10
+    n_test = 30
 
-    request.session['algorithm'] = 'rt'
+    # Compute the beta parameter and the number of training examples based on the performance in memory test.
+    scores = []
+    for score in MemoryTest.objects.filter(user=request.user).all():
+      scores.append(score.score)
+
+    scores = np.sort(scores)
+    score = np.average(scores[-2:])
+
+    if score <=4.5:
+      n_teaching = 20
+    elif score > 4.5 and score <=6.5:
+      n_teaching = 30
+    elif score> 6.5:
+      n_teaching = 40
+
+    beta = 1 - 1/score
+
+    print(score,beta)
+
+    # Set the session variables.
+    request.session['beta'] = beta
+    request.session['algorithm'] = 'jedi'
     request.session['category'] = category
     request.session['n_teaching'] = n_teaching
     request.session['n_test'] = n_test
     request.session['c_teaching'] = 0
     request.session['c_test'] = 0
-
+    request.session['ts_order'] = []
+    request.session['ysl_prob'] = []
+    request.session['ysl'] = []
     request.session['mode'] = 'teaching'
+    request.session['ev_order'] = []
+
 
     ids = JediImages.objects.filter(category=category).all().values_list('id')
     imgs_ids = []
     for id in ids:
       imgs_ids.append(int(id[0]))
 
-    print(imgs_ids)
     request.session['image_ids'] = imgs_ids
 
     data = {}
@@ -59,14 +84,20 @@ def play(request):
   mode = request.session['mode']
   data = {}
 
+
+
+  img_idx, img_name = get_next(request)
+  print(img_name)
   # Get the next image to show to the user..
-  img = JediImages.objects.get(id=get_next(request))
+  img = JediImages.objects.get(filename=img_name)
 
   if request.session['mode'] == 'test':
-    print('C_TEST',request.session['c_test'])
-
+    request.session['ev_order'] = request.session['ev_order'] + [img_idx]
     if request.session['c_test'] >= request.session['n_test']:
       return render(request, 'jedi_teaching/completed.html', data)
+
+    data['curr_image_no'] = request.session['c_test'] + 1
+    data['total_image_no'] = request.session['n_test']
 
   else:
     print('C_TEACHING',request.session['c_teaching'])
@@ -74,7 +105,8 @@ def play(request):
       request.session['mode'] = 'test'
       return render(request, 'jedi_teaching/test_mode.html', data)
 
-
+    data['curr_image_no'] = request.session['c_teaching'] + 1
+    data['total_image_no'] = request.session['n_teaching']
 
 
   data['image'] = img.enc_filename
@@ -114,7 +146,7 @@ def feedback(request):
       if label_option == 'domestic':
         yl = 1
       else:
-        yl = 2
+        yl = -1
 
       if img.label == 'domestic':
         y = 1
@@ -129,6 +161,8 @@ def feedback(request):
       user_label.algorithm = request.session['algorithm']
       user_label.mode = request.session['mode']
       user_label.save()
+
+      request.session['ysl'] = request.session['ysl'] + [yl]
 
       if request.session['mode'] == 'test':
         request.session['c_test'] +=  1

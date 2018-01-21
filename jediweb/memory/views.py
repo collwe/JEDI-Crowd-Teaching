@@ -8,6 +8,8 @@ from rest_framework.authtoken.models import Token
 
 from .forms import UserForm
 from .models import MemoryImages, MemoryTest
+from django.core.mail import send_mail
+
 
 
 def register(request):
@@ -27,9 +29,19 @@ def register(request):
       user.save()
 
       token, created = Token.objects.get_or_create(user=user)
+      print(token)
 
+      send_mail(
+        'JEDI Url',
+        'Hello,\n'
+        'Please click on the following link to access the JEDI experiment page.\n'
+        'https://jedi.localtunnel.me/memory/home/%s'%token,
+        'jedi@asu.edu',
+        [user.email],
+        fail_silently=False,
+      )
 
-      # Save the details.
+      return render(request,'memory/registered.html')
 
   else:
     form = UserForm()
@@ -59,7 +71,17 @@ def start(request):
 
 
 def images(request, n_img=2):
+  memoryTest = MemoryTest.objects.filter(user=request.user)
   data = {}
+  data['token'] = Token.objects.get(user=request.user)
+
+  if len(memoryTest) >=3:
+    token = Token.objects.get(user=request.user)
+
+    data['key'] = token.key
+    # Maximum limit reached.
+    return render(request,'memory/max_limit.html',data)
+
   data['n_img'] = n_img;
   data['show_memory_nav'] = True
   return render(request, 'memory/images.html', data)
@@ -67,6 +89,8 @@ def images(request, n_img=2):
 
 def images_test(request):
   data = {}
+  data['token'] = Token.objects.get(user=request.user)
+
   data['show_memory_nav'] = True
   return render(request, 'memory/images_test.html', data)
 
@@ -138,6 +162,11 @@ def completed(request):
 
   memoryTest = MemoryTest.objects.filter(user=request.user).all()
   trials = len(memoryTest)
+
+  token = Token.objects.get(user=request.user)
+
+  data['key'] = token.key
+
 
   data['trials'] = trials
 
