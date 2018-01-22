@@ -36,10 +36,8 @@ def register(request):
 
       send_mail(
         'JEDI Url',
-        'Hello,\n'
-        'Please click on the following link to access the JEDI experiment page.\n'
-        'https://jedi.localtunnel.me/memory/home/%s'%token,
-        'jedi@asu.edu',
+        email_text,
+        'arunreddy@asu.edu',
         [user.email],
         fail_silently=False,
       )

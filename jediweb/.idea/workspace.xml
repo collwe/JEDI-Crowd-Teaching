@@ -47,8 +47,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memory/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="34" column="35" lean-forward="false" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+            <state relative-caret-position="510">
+              <caret line="39" column="18" lean-forward="false" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -66,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="email.txt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="email.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/memory/email.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="26" lean-forward="false" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+            <state relative-caret-position="357">
+              <caret line="21" column="14" lean-forward="true" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -79,14 +79,14 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jediweb/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="642">
+            <state relative-caret-position="183">
               <caret line="131" column="68" lean-forward="false" selection-start-line="131" selection-start-column="54" selection-end-line="131" selection-end-column="68" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth_user" pinned="false" current-in-tab="true">
+      <file leaf-file-name="auth_user" pinned="false" current-in-tab="false">
         <entry file="das://table:/68ed41e6/573afb3a-1480-4cf0-b20a-16b42c7697f4/main.auth_user">
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
@@ -176,8 +176,8 @@
         <option value="$PROJECT_DIR$/templates/jedi_teaching/completed.html" />
         <option value="$PROJECT_DIR$/jediweb/settings.py" />
         <option value="$PROJECT_DIR$/templates/memory/images.html" />
-        <option value="$PROJECT_DIR$/templates/memory/email.txt" />
         <option value="$PROJECT_DIR$/memory/views.py" />
+        <option value="$PROJECT_DIR$/templates/memory/email.txt" />
       </list>
     </option>
   </component>
@@ -865,14 +865,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jediweb/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="131" column="68" lean-forward="false" selection-start-line="131" selection-start-column="54" selection-end-line="131" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/memory/images.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
@@ -881,18 +873,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/memory/email.txt">
+    <entry file="file://$PROJECT_DIR$/jediweb/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="26" lean-forward="false" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+        <state relative-caret-position="183">
+          <caret line="131" column="68" lean-forward="false" selection-start-line="131" selection-start-column="54" selection-end-line="131" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/memory/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="34" column="35" lean-forward="false" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+        <state relative-caret-position="510">
+          <caret line="39" column="18" lean-forward="false" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -903,6 +895,14 @@
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/memory/email.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="14" lean-forward="true" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>

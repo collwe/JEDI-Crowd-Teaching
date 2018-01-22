@@ -3,7 +3,9 @@ Hello,
 Thank you for registering to participate in the JEDI experiment. The experiment is done in three stages, and the following are few details about the experiment.
 
 Stage 1: The memory length of the participant is estimated using an image ordering game. Given a set of images, from two to nine images, reorder the images as they were shown initially.
+
 Stage 2: The JEDI teacher teaches you a 20-40 images. Label the shown image as "Domestic" or "Wild", in the next step the teacher will give you the feedback whether the given answer is correct or incorrect. Please use this information to gradually grasp the idea of labeling.
+
 Stage 3: The third stage is an exam phase. Based on the observations from the earlier teaching stage, annotate the given images (~200) as "Domestic" or "Wild".
 
 After you successfully complete annotating all the images. An amazon gift card will be sent to you for your participation.
@@ -14,5 +16,7 @@ http://198.11.228.162:9000/memory/home/{{token}}
 
 
 
+
 Thanks!
+
 Folks@STAR Lab
