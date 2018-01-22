@@ -129,7 +129,7 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = ['jedi.localtunnel.me', '127.0.0.1']
+ALLOWED_HOSTS = ['jedi.localtunnel.me', '127.0.0.1', '198.11.228.162']
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
