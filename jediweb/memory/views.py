@@ -9,7 +9,9 @@ from rest_framework.authtoken.models import Token
 from .forms import UserForm
 from .models import MemoryImages, MemoryTest
 from django.core.mail import send_mail
+from django.template.loader import get_template
 
+from django.template.loader import render_to_string
 
 
 def register(request):
@@ -29,7 +31,8 @@ def register(request):
       user.save()
 
       token, created = Token.objects.get_or_create(user=user)
-      print(token)
+
+      email_text = render_to_string('memory/email.txt',{'token':token})
 
       send_mail(
         'JEDI Url',
