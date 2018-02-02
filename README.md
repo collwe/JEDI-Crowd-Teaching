@@ -1,5 +1,5 @@
 # Unlearn What You Have Learned: Adaptive Crowd Teaching with Adjustable Exponential Decay Memory Learners
--- Yao Zhou, Arun Reddy, Jingrui He
+-- Yao Zhou, Arun Reddy Nelakurthi , Jingrui He
 
 ### Introduction
 We propose an adaptive teaching framework named JEDI to construct the personalized optimal teaching set for crowdsourcing workers. 
