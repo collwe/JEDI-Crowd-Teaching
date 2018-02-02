@@ -6,7 +6,7 @@ We propose an adaptive teaching framework named JEDI to construct the personaliz
 
 ### Content
 - Matlab implementation of JEDI with harmonic estimation
-- Django/Python implementation of the JEDI adaptive interface for real human learners.
+- Django/Python implementation of the JEDI adaptive web interface for real human learners.
 
 ### Acknowledgement
 This is the latest source code of JEDI for KDD 18 reviews only, please do not distribute without permission.
