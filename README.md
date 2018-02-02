@@ -5,7 +5,7 @@
 We propose an adaptive teaching framework named JEDI to construct the personalized optimal teaching set for crowdsourcing workers. 
 
 ### Content
-- Matlab implementation of JEDI with harmonic estimation
+- Matlab implementation of JEDI with omniscient teacher and JEDI with harmonic estimation.
 - Django/Python implementation of the JEDI adaptive web interface for real human learners.
 
 ### Acknowledgement
