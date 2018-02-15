@@ -1,11 +1,11 @@
-# Unlearn What You Have Learned: Adaptive Crowd Teaching with Adjustable Exponential Decay Memory Learners
+# Unlearn What You Have Learned: Adaptive Crowd Teaching with Adjustable Exponentially Decayed Memory Learners
 -- Yao Zhou, Arun Reddy Nelakurthi, Jingrui He
 
 ### Introduction
 We propose an adaptive teaching framework named JEDI to construct the personalized optimal teaching set for crowdsourcing workers. 
 
 ### Content
-- Matlab implementation of JEDI with omniscient teacher and JEDI with harmonic estimation.
+- Matlab implementation of JEDI with harmonic function estimation.
 - Django/Python implementation of the JEDI adaptive web interface for real human learners.
 
 ### Acknowledgement
