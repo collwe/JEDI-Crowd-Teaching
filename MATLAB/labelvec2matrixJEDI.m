@@ -1,5 +1,5 @@
 function Y = labelvec2matrixJEDI(y, k) 
-% k is # of classes (JEDI has 2 classes for the moment)
+% k is # of classes (JEDI has 2 classes for this moment)
 % y has labels of -1 and +1
 % Y has labels [1 0] (for +1) and [0 1] (for -1)
 

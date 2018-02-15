@@ -1,8 +1,8 @@
 function [selectIdx, selectProb] = JEDI_blackbox(D, Y, learner, wo, step, A)
-% implement the JEDI(Interactive Crowd Teaching with adJustable Exponential Decay Memory Learners)
+% implement the JEDI(Adaptive Crowd Teaching with adJustable Exponentially Decayed Memory Learners)
 % by -- Yao Zhou
-% VERSION 1: use harmonic
-%  
+% JEDI version: use harmonic function with repeated teaching examples
+%
 % Input:
 %   (D, Y)  : teaching pool
 %   learner : the learners and their assets
@@ -43,7 +43,6 @@ end
 coeff = beta.^(tminus:-1:1);
 FS = sum(repmat((-1*Ys).*Ps,1,d) .* Xs .* repmat(coeff',1,d), 1); 
 
-
 w = Ws(:,end);
 for id = 1:numData % loop over all potential (xt, yt)
     x = D(id,:);
@@ -63,31 +62,8 @@ for id = 1:numData % loop over all potential (xt, yt)
                  - 2 * eta * ( log(pnt) - log(1+exp(-1*epsilon_o)) ); 
 end
 
-
-% % calculat the fs, where s = 1,2,...,t-1
-% tminus = length(learner.Ys);
-% product_s = diag( learner.Xs * Ws(:,1:end-1) );
-% epsilon_s = Ys .* product_s;
-% coeff = beta.^(tminus:-1:1);
-% FS = sum(repmat((-1*Ys)./(1+exp(epsilon_s)),1,d) .* Xs .* repmat(coeff',1,d), 1); 
-% 
-% w = Ws(:,end);
-% for id = 1:numData
-%     x = D(id,:);
-%     x = x';
-%     y = Y(id,:);
-%     epsilon = y * (w' * x);
-%     epsilon_o = y * (wo' * x);
-%     
-%     fvalue(id,1) = eta^2 * norm(-1*y*x/(1+exp(epsilon)))^2  ...
-%                  + 2 * eta^2 * FS * (-1*y*x/(1+exp(epsilon))) ...
-%                  - 2 * eta * ( log(1+exp(-1*epsilon)) - log(1+exp(-1*epsilon_o)) ); 
-% end
-% 
-
 % results output
 [~, selectIdx] = min(fvalue);
 selectProb = Prob(selectIdx,:); % for JEDI harmonic use only
-
 
 end

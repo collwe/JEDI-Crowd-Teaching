@@ -18,7 +18,7 @@ end
 X = [X; ones(1,size(X,2))];
 [d,n] = size(X);
 tol = 1e-4;
-epoch = 200;
+epoch = 1000; % original is 200, --yao
 llh = -inf(1,epoch);
 h = 2*y-1;
 w = rand(d,1);

@@ -1,6 +1,7 @@
 function [D, Y] = gaussianData(mu1, mu2, sigma, numData)
 %% generate binary gaussian data
 
+% 
 % %% 2 task classification
 % r1 = mvnrnd(mu1,sigma1,numData/2);
 % r2 = mvnrnd(mu2,sigma1,numData/2);
