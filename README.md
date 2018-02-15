@@ -1,4 +1,4 @@
-# Unlearn What You Have Learned: Adaptive Crowd Teaching with Adjustable Exponentially Decayed Memory Learners
+# Unlearn What You Have Learned: Adaptive Crowd Teaching with Exponentially Decayed Memory Learners
 -- Yao Zhou, Arun Reddy Nelakurthi, Jingrui He
 
 ### Introduction
