@@ -75,7 +75,7 @@ def dummy_register(request):
   token, created = Token.objects.get_or_create(user=user)
 
   # redirect
-  return redirect('memory_home',{'token':token})
+  return redirect(reverse('memory_home',kwargs={'token':token}))
 
 
 def home(request, token):
