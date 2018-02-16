@@ -58,7 +58,7 @@ def random_string(n_chars=10):
 
 
 def index(request):
-  return render(request, 'memory/index.html', data)
+  return render(request, 'memory/index.html')
 
 def dummy_register(request):
 
