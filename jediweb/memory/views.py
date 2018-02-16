@@ -166,8 +166,7 @@ def check_order(request):
   data = {}
   n_imgs = len(imgs)
 
-  if (imgs == provided_order):
-    if n_imgs <= 10:
+  if (imgs == provided_order) and n_imgs <= 10:
       n_imgs = len(imgs) + 1
       data['redirect_url'] = reverse('memory_images', kwargs={'n_img': '%d' % (n_imgs)})
   else:
