@@ -29,7 +29,7 @@ def start(request, token):
     # Setup.
     category = 'Dog'
     n_teaching = 10
-    n_test = 100
+    n_test = 30
 
     # Compute the beta parameter and the number of training examples based on the performance in memory test.
     scores = []
@@ -54,18 +54,18 @@ def start(request, token):
 
     # Set up the algorithm.
     user_id = request.user.id
-
-    if user_id % 4 == 0:
-      algorithm = 'imt'
-      n_teaching = 30
-    elif user_id % 4 == 1:
-      algorithm = 'eer'
-      n_teaching = 30
-    elif user_id % 4 == 2:
-      algorithm = 'jedi'
-    else:
-      algorithm = 'rt'
-      n_teaching = 30
+    algorithm = 'jedi'
+    # if user_id % 4 == 0:
+    #   algorithm = 'imt'
+    #   n_teaching = 30
+    # elif user_id % 4 == 1:
+    #   algorithm = 'eer'
+    #   n_teaching = 30
+    # elif user_id % 4 == 2:
+    #   algorithm = 'jedi'
+    # else:
+    #   algorithm = 'rt'
+    #   n_teaching = 30
 
     # Set the session variables.
     request.session['beta'] = beta
