@@ -87,7 +87,7 @@ def JEDI_harmonic(Y, A, order, Ysl):
   prob[order_unique, :] = flu[nFlu - len(order_unique):, :];
   restIdx = list(set(range(numData)) - set(order_unique))
   print("restIdx",len(restIdx))
-  prob[restIdx, :] = flu[:nFlu - len(order_unique), :]
+  prob[restIdx, :] = flu[:nFlu - len(order_unique) -1, :]
 
   return prob
 
