@@ -27,9 +27,9 @@ def start(request, token):
     login(request, user)
 
     # Setup.
-    category = 'Cat'
+    category = 'Dog'
     n_teaching = 10
-    n_test = 30
+    n_test = 100
 
     # Compute the beta parameter and the number of training examples based on the performance in memory test.
     scores = []
@@ -39,20 +39,37 @@ def start(request, token):
     scores = np.sort(scores)
     score = np.average(scores[-2:])
 
-    if score <=4.5:
-      n_teaching = 20
-    elif score > 4.5 and score <=6.5:
-      n_teaching = 30
-    elif score> 6.5:
-      n_teaching = 40
-
     beta = 1 - 1/score
 
-    print(score,beta)
+    if score <=4.5:
+      n_teaching = 20
+      beta = 0.75
+    elif score > 4.5 and score <=6.5:
+      n_teaching = 30
+      beta = 0.833
+    elif score> 6.5:
+      n_teaching = 40
+      beta = 0.875
+
+
+    # Set up the algorithm.
+    user_id = request.user.id
+
+    if user_id % 4 == 0:
+      algorithm = 'imt'
+      n_teaching = 30
+    elif user_id % 4 == 1:
+      algorithm = 'eer'
+      n_teaching = 30
+    elif user_id % 4 == 2:
+      algorithm = 'jedi'
+    else:
+      algorithm = 'rt'
+      n_teaching = 30
 
     # Set the session variables.
     request.session['beta'] = beta
-    request.session['algorithm'] = 'jedi'
+    request.session['algorithm'] = algorithm
     request.session['category'] = category
     request.session['n_teaching'] = n_teaching
     request.session['n_test'] = n_test
@@ -93,7 +110,7 @@ def play(request):
 
   if request.session['mode'] == 'test':
     request.session['ev_order'] = request.session['ev_order'] + [img_idx]
-    if request.session['c_test'] >= request.session['n_test']:
+    if request.session['c_test'] >= (request.session['n_test'] - 1):
       return render(request, 'jedi_teaching/completed.html', data)
 
     data['curr_image_no'] = request.session['c_test'] + 1

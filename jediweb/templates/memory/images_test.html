@@ -8,6 +8,14 @@
     <button id="nextBtn" onclick="orderButtonClicked()" class="btn waves-effect waves-light col s2 offset-s10">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
 </div>
 
+<div class="row">
+  <div class="col s12">
+     <ol>
+       <li>Please drag and drop the images to reorder them.</li>
+       <li>Please click next after the images are  reordered.</li>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -25,8 +33,6 @@
             console.log(_obj)
             _li.push(_obj.attr('data-id'))
         })
-
-        console.log(_li)
 
         $.post('/memory/check_order/', { 'items':_li, 'csrfmiddlewaretoken': '{{csrf_token}}'}, function (data) {
             console.log(data)

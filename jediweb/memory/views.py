@@ -36,10 +36,8 @@ def register(request):
 
       send_mail(
         'JEDI Url',
-        'Hello,\n'
-        'Please click on the following link to access the JEDI experiment page.\n'
-        'https://jedi.localtunnel.me/memory/home/%s'%token,
-        'jedi@asu.edu',
+        email_text,
+        'arunreddy@asu.edu',
         [user.email],
         fail_silently=False,
       )
@@ -173,10 +171,7 @@ def completed(request):
 
   data['trials'] = trials
 
-  if trials < 3:
-    next_url = '/memory/images/2'
-  else:
-    next_url = '/memory/score'
+  next_url = '/memory/images/2'
 
   data['next_url'] = next_url
 

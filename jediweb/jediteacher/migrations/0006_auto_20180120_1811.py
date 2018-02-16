@@ -10,14 +10,14 @@ import re
 def load_images(apps, schema_editor):
     JediImages = apps.get_model('jediteacher', 'JediImages')
     images = []
-    for f in glob("/home/arun/Downloads/images/dom**"):
+    for f in glob("/home/stethox/JEDI_KDD18/data/images/dom**"):
       folder_name = os.path.basename(f)
       splitted = re.sub('(?!^)([A-Z][a-z]+)', r' \1', folder_name).split()
 
       for img in os.listdir(f):
         images.append([splitted[0], splitted[1],img])
 
-    for f in glob("/home/arun/Downloads/images/wild**"):
+    for f in glob("/home/stethox/JEDI_KDD18/data/images/wild**"):
       folder_name = os.path.basename(f)
       splitted = re.sub('(?!^)([A-Z][a-z]+)', r' \1', folder_name).split()
       for img in os.listdir(f):
@@ -26,7 +26,7 @@ def load_images(apps, schema_editor):
 
     df = pd.DataFrame(images, columns=['label','category','filename'])
 
-    names = sio.loadmat('/home/arun/Downloads/images/nameMapping.mat')
+    names = sio.loadmat('/home/stethox/JEDI_KDD18/data/images/nameMapping.mat')
 
     enc_images = []
     for i,j in names['nameMapping']:
@@ -65,3 +65,4 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(load_images, reverse_code=unload_images)
     ]
+

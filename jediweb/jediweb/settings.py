@@ -78,14 +78,16 @@ WSGI_APPLICATION = 'jediweb.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jedi',
+        'USER': 'root',
+        'PASSWORD': 'bareMetal007',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -141,9 +143,9 @@ handler400 = 'memory.views.error'
 import scipy.io as sio
 
 DATASET = {}
-DATASET['Cat'] = sio.loadmat('../data/data_cat_JEDI_full_forArun.mat')
-DATASET['Horse'] = sio.loadmat('../data/data_horse_JEDI_full_forArun.mat')
-DATASET['Dog'] = sio.loadmat('../data/data_dog_JEDI_full_forArun.mat')
+DATASET['Cat'] = sio.loadmat('/home/stethox/JEDI_KDD18/data/data_cat_JEDI_full_forArun.mat')
+DATASET['Horse'] = sio.loadmat('/home/stethox/JEDI_KDD18/data/data_horse_JEDI_full_forArun.mat')
+DATASET['Dog'] = sio.loadmat('/home/stethox/JEDI_KDD18/data/data_dog_JEDI_full_forArun.mat')
 
 
 EMAIL_HOST = 'smtp.sendgrid.net'
