@@ -27,9 +27,9 @@ def start(request, token):
     login(request, user)
 
     # Setup.
-    category = 'Dog'
+    category = 'Cat'
     n_teaching = 10
-    n_test = 30
+    n_test = 10
 
     # Compute the beta parameter and the number of training examples based on the performance in memory test.
     scores = []
