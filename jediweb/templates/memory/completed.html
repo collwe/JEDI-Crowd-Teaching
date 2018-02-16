@@ -6,8 +6,8 @@
     <div class="row">
         <a href="{{ next_url }}" class="btn">Continue another trial</a>
 
-        <% if trials == 3 %>
+        {% if trials == 3 %}
             <a href="/jedi_teacher/start/{{ key }}" class="btn">Go to Test</a>
-        <% endif %>
+        {% endif %}
     </div>
 {% endblock %}
