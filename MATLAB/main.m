@@ -1,9 +1,6 @@
-%% main function 
+%% main function of JEDI teaching
 % -- Yao Zhou
 clc;clear;close all
 
-%% test the harmonic function with extra 'unlabeled points' (padded using labeled points)
-% demo_harmonic_onLabeledData
-
-%% test the worker memory
+%% A Simple demo on random Gaussian data with synthetic learners
 demo_learners

@@ -1,93 +1,88 @@
-%% This function use simulated learners (random w0 and random \beta)
-clc;clear;close all;
+%% This demo is for JEDI teacher with harmonic function esimation
+%  Dataset: random 10-D Gaussian data 
 
-%% LOAD (generate) THE DATA
-d = 10;
-mu1 = -.6*ones(10,1);
-mu2 = .6*ones(10,1);
-sigma1 = diag(round(rand(d,1)*10)); 
-numData = 1000;
+loadData = true;
+%% Load (Generate) THE DATA
+if loadData
+    load('data/Data.mat')
+else
+    d = 10;
+    mu1 = -.6*ones(10,1);
+    mu2 = .6*ones(10,1);
+    sigma1 = diag(round(rand(d,1)*10)); 
+    numData = 1000;
 
-% accu_LR = 0;
-% count = 0;
-% while accu_LR < 0.80 || accu_LR >= 0.95 % quality control of the generated data
-%     if count ~= 0
-%         fprintf('Random Guassian Data Generation # %d, accu_LR = %.2f...\n', count, accu_LR);
-%     end
-%     [D, Y] = gaussianData(mu1, mu2, sigma1, numData);
-%     
-%     % split into teaching set and evaluation set
-%     ratio = 0.2;
-%     randidx = randperm(numData*2);
-%     tidx = randidx(1:floor(numData*2*ratio))';
-%     eidx = setdiff(1:numData*2, tidx)';
-% 
-%     % learn the target concept w* on teaching set
-%     pathPRML = 'PRML/code';
-%     addpath(genpath(pathPRML));
-% 
-%     X = D(tidx,1:d)';
-%     [model, llh] = logitBin(X,(Y(tidx)'+1)/2);
-%     [y, p] = logitBinPred(model, X);
-%     pred_LR = y == ((Y(tidx)'+1)/2);
-%     accu_LR = sum(pred_LR)/length(y);
-%     wo_LR = model.w;
-%     
-%     count = count+1;
-%     rmpath(genpath(pathPRML))
-% end
-% % teaching set
-% Dt = D(tidx,:); Yt = Y(tidx);
-% % evaluation set
-% De = D(eidx,:); Ye = Y(eidx);
-% 
-% %% generate the Affinity matrix A of the teaching set
-% X = Dt(:,1:d);
-% Xnorm = X./repmat(diag(sqrt(sigma1))',length(tidx),1);
-% [Edgeidx, Dist] = knnsearch(Xnorm, Xnorm, 'K', 11, 'IncludeTies', true);
-% 
-% fcn = @removeFirst; % remove the NN of node itself
-% Edgeidx =  cellfun(fcn, Edgeidx, 'UniformOutput', false);
-% Dist =  cellfun(fcn, Dist, 'UniformOutput', false);
-% 
-% fcn2 = @(x) exp(-1*x.^2); % from ICML 04 Harmonic paper
-% Dist = cellfun(fcn2, Dist, 'UniformOutput', false);
-% [NodesS, NodesT, EdgeWeights] = generateEdgeTable(Edgeidx, Dist);
-% 
-% A = full(sparse(NodesS, NodesT, EdgeWeights, length(tidx), length(tidx)));
-% A = A + A';
-% 
-% % show the distance matrix plot of Dt, Yt
-% tpos = find(Yt == 1);
-% tneg = find(Yt == -1);
-% W = A([tpos; tneg], [tpos; tneg]);
-% figure;imshow(W ~= 0,[])
+    accu_LR = 0;
+    count = 0;
+    while accu_LR < 0.80 || accu_LR >= 0.95 % quality control of the generated data
+        if count ~= 0
+            fprintf('Random Guassian Data Generation # %d, accu_LR = %.2f...\n', count, accu_LR);
+        end
+        [D, Y] = gaussianData(mu1, mu2, sigma1, numData);
 
-load matlab.mat
+        % split into teaching set and evaluation set
+        ratio = 0.2;
+        randidx = randperm(numData*2);
+        tidx = randidx(1:floor(numData*2*ratio))';
+        eidx = setdiff(1:numData*2, tidx)';
 
-%% GENERATE LEARNERS and JEDI TEACHING
-maxIter = 600;
-step_init = 0.05;
+        % learn the target concept w* on teaching set
+        pathPRML = 'PRML/code';
+        addpath(genpath(pathPRML));
 
-% learner assets
-% Beta = linspace(0.01, 0.99, numLearner);
-% Beta = [0.01, 0.5, 0.667, 0.75, 0.833, 0.867, 0.875, 0.9];
-% numMemory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-Beta =      [0.0, 0.5, 0.75, 0.875, 0.99];
-numMemory = [1,   2,   4,    8,     Inf];
+        X = D(tidx,1:d)';
+        [model, llh] = logitBin(X,(Y(tidx)'+1)/2);
+        [y, p] = logitBinPred(model, X);
+        pred_LR = y == ((Y(tidx)'+1)/2);
+        accu_LR = sum(pred_LR)/length(y);
+        wo_LR = model.w;
+
+        count = count+1;
+        rmpath(genpath(pathPRML))
+        if count >= 20 % just rerun the code if the random seed is not good
+            return
+        end
+    end
+    % teaching set
+    Dt = D(tidx,:); Yt = Y(tidx);
+    % evaluation set
+    De = D(eidx,:); Ye = Y(eidx);
+    num_t = length(tidx);
+end
+
+%% generate the Affinity matrix A of the teaching set
+X = Dt(:,1:d);
+Xnorm = X./repmat(diag(sqrt(sigma1))',num_t,1);
+[Edgeidx, Dist] = knnsearch(Xnorm, Xnorm, 'K', 11, 'IncludeTies', true);
+
+fcn = @removeFirst; % remove the NN of node itself
+Edgeidx =  cellfun(fcn, Edgeidx, 'UniformOutput', false);
+Dist =  cellfun(fcn, Dist, 'UniformOutput', false);
+
+fcn2 = @(x) exp(-1*x.^2); % from ICML 04 Harmonic paper
+Dist = cellfun(fcn2, Dist, 'UniformOutput', false);
+[NodesS, NodesT, EdgeWeights] = generateEdgeTable(Edgeidx, Dist);
+
+A = full(sparse(NodesS, NodesT, EdgeWeights, num_t, num_t));
+A = A + A';
+
+%% GENERATE LEARNERS and TEACHING USING JEDI
+maxIter = 500;
+step_init = 0.03;
+
+% learners 
+Beta =      [0.0, 0.368, 0.5, 0.75, 0.875, 0.999];
+numMemory = [0,   1,   2,   4,   8,   Inf];
 numLearner = length(Beta);
 
 % teacher assets
 fvalue_JEDI = zeros(maxIter,numLearner);
 teachingSetJEDI = zeros(maxIter,numLearner);
 
-%w0 = (-1 + rand(d+1,1)*2) .* ones(d+1,1);
-load w0.mat
-
-selectIdxFirst = 390 %randperm(length(Yt),1);
+w0 = (-1 + rand(d+1,1)*2) .* ones(d+1,1);
+selectIdxFirst = randperm(length(Yt),1);
 for il = 1:numLearner
     beta = Beta(il);
-%     w0 = (-1 + rand(d+1,1)*2) .* ones(d+1,1);
     learner(il) = learnerClass(beta, w0);
     w = w0;
     
@@ -112,7 +107,7 @@ for il = 1:numLearner
         x = Dt(selectIdx,:);
         ysl = sign(w' * x');
         
-        % learner learns (real learner, these calculations are assumed to be done within their mind...)
+        % learner learns (For real human learner, the learning are assumed to be done within their mind.)
         y = Yt(selectIdx);
         epsilon = y * (w' * x');
         dw = 1/(1+exp(epsilon)) * (-1*y*x');
@@ -141,32 +136,21 @@ for il = 1:numLearner
     fprintf('Teaching of learner #%d (beta = %0.3f) is done...\n\n', il, learner(il).beta);
 end
 
-pathCMUcolor = 'cmuColor';
-addpath(pathCMUcolor);
-c = @CMUcolors;
-
-% loss converge curve
+%% plot the negative log-likelihood curve
 figure; hold on
 txt = cell(numLearner,1);
 for il = 1:numLearner
-    plot(fvalue_JEDI(1:500, il),'LineWidth', 1.5)
-    txt{il} = sprintf('Learner #%d: \\beta = %0.2f',il, learner(il).beta);
+    if il == 1
+        plot(fvalue_JEDI(1:maxIter, il), '--', 'LineWidth', 1.2)
+        txt{il} = 'IMT';
+    else
+        plot(fvalue_JEDI(1:maxIter, il),'LineWidth', 1.2)
+        txt{il} = sprintf('JEDI: \\beta = %0.3f',learner(il).beta);
+    end
 end
-legend(txt)
-
-% teaching set uniqueness
-numTeachingSet = zeros(numLearner,1);
-for il = 1:numLearner
-    numTeachingSet(il) = length(unique(teachingSetJEDI(:,il)));
-end
-
-% learner teaching sequence accuracy
-teachingAccu = zeros(numLearner,1);
-for il = 1:numLearner
-    Ys = learner(il).Ys;
-    Ysl = learner(il).Ysl;
-    teachingAccu(il) = sum(Ys == Ysl)/length(Ys);
-end
-
+title('Convergence comparison','Interpreter','latex');
+xlabel('# Iterations');
+ylabel('Negative log-likelihood')
+legend(txt);
 
 disp('THE END')
