@@ -112,14 +112,18 @@ def play(request):
     request.session['ev_order'] = request.session['ev_order'] + [img_idx]
     if request.session['c_test'] >= (request.session['n_test']):
 
-      r_yl = UserLabels.objects.filter(user=request.user).all().values_list('yl')
-      r_y = UserLabels.objects.filter(user=request.user).all().values_list('y')
+      r_yl = UserLabels.objects.filter(user=request.user, mode='test').all().values_list('yl')
+      r_y = UserLabels.objects.filter(user=request.user, mode='test').all().values_list('y')
 
       total = 0
       correct = 0
       for _a,_b in zip(r_y,r_yl):
-        if _a[0] == _b[0]:
+        if _a[0] == 2 and _b[0] == -1:
           correct +=1
+
+        if _a[0] == 1 and _b[0] == 1:
+          correct +=1
+        
         total+=1
 
       data['correct'] = correct
