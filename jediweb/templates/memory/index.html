@@ -1,7 +1,17 @@
 {% extends 'common/index.html' %}
 {% block content %}
-    <p>Instructions:</p>
-    <a href="{% url 'memory_register' %}" value="Start" class="btn btn-primary">Start</a>
+    <h3>Welcome to JEDI machine teaching platform!! </h3>
+
+    <p>The JEDI web application has the following three stages.</p>
+    <ol>
+        <li>Memory Estimation</li>
+        <li>Machine Teaching</li>
+        <li>Evaluation</li>
+    </ol>
+
+    <p>Please complete all the three stages. At the end your performance is evaluated and reported to you. Detailed
+        instructions for each stage are provided before start of the each stage as necessary.</p>
+    <a href="{% url 'memory_register' %}" value="Start" class="btn btn-primary">Enter</a>
 
     <p></p>
 {% endblock %}
