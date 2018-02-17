@@ -29,7 +29,7 @@ def start(request, token):
     # Setup.
     category = 'Cat'
     n_teaching = 10
-    n_test = 30
+    n_test = 10
 
     # Compute the beta parameter and the number of training examples based on the performance in memory test.
     scores = []
@@ -39,20 +39,37 @@ def start(request, token):
     scores = np.sort(scores)
     score = np.average(scores[-2:])
 
-    if score <=4.5:
-      n_teaching = 20
-    elif score > 4.5 and score <=6.5:
-      n_teaching = 30
-    elif score> 6.5:
-      n_teaching = 40
-
     beta = 1 - 1/score
 
-    print(score,beta)
+    if score <=4.5:
+      n_teaching = 20
+      beta = 0.75
+    elif score > 4.5 and score <=6.5:
+      n_teaching = 30
+      beta = 0.833
+    elif score> 6.5:
+      n_teaching = 40
+      beta = 0.875
+
+
+    # Set up the algorithm.
+    user_id = request.user.id
+    algorithm = 'jedi'
+    # if user_id % 4 == 0:
+    #   algorithm = 'imt'
+    #   n_teaching = 30
+    # elif user_id % 4 == 1:
+    #   algorithm = 'eer'
+    #   n_teaching = 30
+    # elif user_id % 4 == 2:
+    #   algorithm = 'jedi'
+    # else:
+    #   algorithm = 'rt'
+    #   n_teaching = 30
 
     # Set the session variables.
     request.session['beta'] = beta
-    request.session['algorithm'] = 'jedi'
+    request.session['algorithm'] = algorithm
     request.session['category'] = category
     request.session['n_teaching'] = n_teaching
     request.session['n_test'] = n_test
@@ -93,7 +110,25 @@ def play(request):
 
   if request.session['mode'] == 'test':
     request.session['ev_order'] = request.session['ev_order'] + [img_idx]
-    if request.session['c_test'] >= request.session['n_test']:
+    if request.session['c_test'] >= (request.session['n_test']):
+
+      r_yl = UserLabels.objects.filter(user=request.user, mode='test').all().values_list('yl')
+      r_y = UserLabels.objects.filter(user=request.user, mode='test').all().values_list('y')
+
+      total = 0
+      correct = 0
+      for _a,_b in zip(r_y,r_yl):
+        if _a[0] == 2 and _b[0] == -1:
+          correct +=1
+
+        if _a[0] == 1 and _b[0] == 1:
+          correct +=1
+        
+        total+=1
+
+      data['correct'] = correct
+      data['total'] = total
+
       return render(request, 'jedi_teaching/completed.html', data)
 
     data['curr_image_no'] = request.session['c_test'] + 1

@@ -3,10 +3,11 @@
 
     <p>A total of {{ trials }}/3 trials have been completed.</p>
 
-    <p>Click on the Next button to continue.</p>
-
     <div class="row">
         <a href="{{ next_url }}" class="btn">Continue another trial</a>
-        <a href="/jedi_teacher/start/{{ key }}" class="btn">Go to Test</a>
+
+        {% if trials == 3 %}
+            <a href="/jedi_teacher/start/{{ key }}" class="btn">Go to Test</a>
+        {% endif %}
     </div>
 {% endblock %}

@@ -5,11 +5,12 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, reverse
 from rest_framework.authtoken.models import Token
-
+from datetime import datetime
 from .forms import UserForm
 from .models import MemoryImages, MemoryTest
 from django.core.mail import send_mail
 from django.template.loader import get_template
+import hashlib
 
 from django.template.loader import render_to_string
 
@@ -50,6 +51,31 @@ def register(request):
   data = {}
   data['form'] = form
   return render(request, 'memory/index.html', data)
+
+def random_string(n_chars=10):
+  dt = datetime.now()
+  return hashlib.sha224(dt.isoformat().encode('utf-8')).hexdigest()[-n_chars:]
+
+
+def index(request):
+  return render(request, 'memory/index.html')
+
+def dummy_register(request):
+
+  # Create a dummy user.
+  user = User()
+  user.first_name = random_string(12)
+  user.last_name = random_string(12)
+
+  email = random_string(8)+'@example.com'
+  user.email = email
+  user.username = email
+  user.save()
+
+  token, created = Token.objects.get_or_create(user=user)
+
+  # redirect
+  return redirect(reverse('memory_home',kwargs={'token':token}))
 
 
 def home(request, token):
@@ -140,8 +166,7 @@ def check_order(request):
   data = {}
   n_imgs = len(imgs)
 
-  if (imgs == provided_order):
-    if n_imgs <= 10:
+  if (imgs == provided_order) and n_imgs <= 10:
       n_imgs = len(imgs) + 1
       data['redirect_url'] = reverse('memory_images', kwargs={'n_img': '%d' % (n_imgs)})
   else:
@@ -171,10 +196,7 @@ def completed(request):
 
   data['trials'] = trials
 
-  if trials < 3:
-    next_url = '/memory/images/2'
-  else:
-    next_url = '/memory/score'
+  next_url = '/memory/images/2'
 
   data['next_url'] = next_url
 

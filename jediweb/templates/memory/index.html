@@ -1,22 +1,17 @@
 {% extends 'common/index.html' %}
 {% block content %}
-    <p>Instructions:</p>
-    <p>You will be shown a set of images anywhere from 2-10. You have to remember the order and when given a random set
-        of images, arrange them in the order presented to you. You will be given one second for each image to go through
-        and remember them. For e.g., you will be given 8 seconds for 8 images.</p>
+    <h3>Welcome to JEDI machine teaching platform!! </h3>
 
-    <p>Click on the Next button to continue.</p>
+    <p>The JEDI web application has the following three stages.</p>
+    <ol>
+        <li>Memory Estimation</li>
+        <li>Machine Teaching</li>
+        <li>Evaluation</li>
+    </ol>
 
-    <p>Please enter your personal details to proceed:</p>
-    <form action="" method="post">
-
-        <fieldset>
-            <legend class="red-text">Personal Information</legend>
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" name="submit" value="Start" class="btn btn-primary">
-        </fieldset>
-    </form>
+    <p>Please complete all the three stages. At the end your performance is evaluated and reported to you. Detailed
+        instructions for each stage are provided before start of the each stage as necessary.</p>
+    <a href="{% url 'memory_register' %}" value="Start" class="btn btn-primary">Enter</a>
 
     <p></p>
 {% endblock %}

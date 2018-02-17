@@ -7,8 +7,7 @@
     <ul id="items" class="row">
     </ul>
     <div class="row">
-        <a id="prevBtn" class="btn waves-effect waves-light col s2"><i class="fa fa-chevron-left"
-                                                                       aria-hidden="true"></i> Previous</a>
+
         <a id="nextBtn" href="{% url 'memory_images_test' %}" class="btn waves-effect waves-light col s2 offset-s8">Next
             <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
     </div>
@@ -45,8 +44,8 @@
                         '<img src="https://s3-us-west-2.amazonaws.com/jediasu/memory/' + images[i] + '" width="200px" height="200px"/>' +
                         '</li>')
                 }
-                setInterval(goToNextPage, (images.length+2) * 1000)
-                $('#timeLabel').text(images.length+2)
+                setInterval(goToNextPage, (images.length+1) * 1000)
+                $('#timeLabel').text(images.length+1)
                 setInterval(updateTime, 1000)
             })
         );

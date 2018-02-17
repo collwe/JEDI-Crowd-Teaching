@@ -5,7 +5,7 @@ import os
 
 def load_memory_images(apps, schema_editor):
     MemoryImages = apps.get_model('memory', 'MemoryImages')
-    for i,f in enumerate(glob('/home/arun/code/github/JEDI_KDD18/data/memory/*.jpg')):
+    for i,f in enumerate(glob('/home/stethox/JEDI_KDD18/data/memory/*.jpg')):
         img = MemoryImages()
         img.file_id = i
         img.file_name = os.path.basename(f)

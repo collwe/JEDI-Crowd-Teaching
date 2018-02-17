@@ -25,7 +25,6 @@ def load_images(apps, schema_editor):
 
 
     df = pd.DataFrame(images, columns=['label','category','filename'])
-
     names = sio.loadmat('../../data/images/nameMapping.mat')
 
     enc_images = []
@@ -65,3 +64,4 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(load_images, reverse_code=unload_images)
     ]
+
