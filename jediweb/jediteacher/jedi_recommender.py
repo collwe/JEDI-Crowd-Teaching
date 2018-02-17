@@ -76,11 +76,18 @@ def JEDI_harmonic(Y, A, order, Ysl):
   nFlu = flu.shape[0]
 
   _f = flu[nFlu - len(order_unique):, :]
+  
+  print("_f",_f.shape)
+  print("flu_shape",flu.shape)
+  print("nFlu",nFlu)
+  print("len order unique",len(order_unique))
+  print("numData",numData)
 
 
   prob[order_unique, :] = flu[nFlu - len(order_unique):, :];
   restIdx = list(set(range(numData)) - set(order_unique))
-  prob[restIdx, :] = flu[:nFlu - len(order_unique), :]
+  print("restIdx",len(restIdx))
+  prob[restIdx, :] = flu[:nFlu - len(order_unique) -1, :]
 
   return prob
 
@@ -145,7 +152,7 @@ def JEDI_blackbox(D, Y, wstar, step, A, beta, _order, ysl_prob, ysl):
 
     fvalue[id, 0]  = k
 
-  memoryLen = round(1 / (1 - beta));
+  memoryLen = round(2 / (1 - beta));
   sortIndex = np.argsort(fvalue, axis=0)
   selectCandidates = sortIndex[:memoryLen + 1]
 
@@ -201,7 +208,7 @@ def compute_w_star(Dt, De, Yt, Ye):
 
 def jedi_next(Dt, Yt, De, Ye, order, ysl_prob, ysl, A, wo_SGD, beta):
   # Parameters.
-  step = 0.05
+  step = 0.2
   max_iterations = 600
   d = Dt.shape[1]
 

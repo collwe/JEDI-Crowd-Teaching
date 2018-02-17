@@ -8,6 +8,7 @@ Stage 2: The JEDI teacher teaches you a 20-40 images. Label the shown image as "
 
 Stage 3: The third stage is an exam phase. Based on the observations from the earlier teaching stage, annotate the given images (~200) as "Domestic" or "Wild".
 
+
 After you successfully complete annotating all the images. An amazon gift card will be sent to you for your participation.
 
 Please click on the following link to start the experiment:
@@ -20,3 +21,4 @@ http://198.11.228.162:9000/memory/home/{{token}}
 Thanks!
 
 Folks@STAR Lab
+

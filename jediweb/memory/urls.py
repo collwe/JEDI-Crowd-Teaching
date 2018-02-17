@@ -3,7 +3,9 @@ from django.conf.urls import url, include
 from .views import *
 
 urlpatterns = [
-  url(r'^index/$', register, name='memory_index'),
+  url(r'^index/$', index, name='memory_index'),
+  url(r'^register/$', dummy_register, name='memory_register'),
+
   url(r'^home/(?P<token>[\w\.-]+)/$', home, name='memory_home'),
   url(r'^start/$', start, name='memory_start'),
   # url(r'^images/', images, name='memory_images'),
