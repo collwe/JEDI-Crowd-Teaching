@@ -9,7 +9,7 @@ We propose an adaptive teaching framework named JEDI to construct the personaliz
 - Django/Python implementation of the JEDI adaptive web interface for real human learners.
 
 ### Demo
-- The JEDI teaching demo for real human learners can be found here:
+- The demo of JEDI teaching for real human learners can be found here:
 [JEDI-Web-Demo](http://198.11.228.162:9000/memory/index/)
 
 ### Acknowledgement
