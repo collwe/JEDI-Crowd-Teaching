@@ -11,4 +11,4 @@ We propose an adaptive teaching framework named JEDI to construct the personaliz
 ### Acknowledgement
 This is the latest source code of JEDI for KDD 18 reviews only, please do not distribute without permission.
 
-Copyright(c) Yao Zhou and Arun Reddy Nelakurthi All rights reserved.
+Copyright(c) Yao Zhou and Arun Reddy Nelakurthi all rights reserved.
