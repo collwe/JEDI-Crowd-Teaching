@@ -13,6 +13,6 @@ We propose an adaptive teaching framework named JEDI to construct the personaliz
 [JEDI-Web-Demo](http://198.11.228.162:9000/memory/index/)
 
 ### Acknowledgement
-This is the latest source code of JEDI for KDD 18 reviews only, please do not distribute without permission.
+This is the latest source code of JEDI for KDD 18.
 
 Copyright(c) Yao Zhou and Arun Reddy Nelakurthi all rights reserved.
