@@ -2,7 +2,7 @@
 -- Yao Zhou, Arun Reddy Nelakurthi, Jingrui He
 
 ### Introduction
-We propose an adaptive teaching framework named JEDI to construct the personalized optimal teaching set for the crowdsourcing workers. The paper is available at [JEDI](https://www.kdd.org/kdd2018/accepted-papers/view/unlearn-what-you-have-learned-adaptive-crowd-teaching-with-exponentially-de).
+We propose an adaptive teaching framework named JEDI to construct the personalized optimal teaching set for the crowdsourcing workers. The paper is available at [here](https://www.kdd.org/kdd2018/accepted-papers/view/unlearn-what-you-have-learned-adaptive-crowd-teaching-with-exponentially-de).
 
 ### Content
 - Matlab implementation of JEDI with harmonic function estimation.
