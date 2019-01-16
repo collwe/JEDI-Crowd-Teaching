@@ -12,7 +12,7 @@ We propose an adaptive teaching framework named JEDI to construct the personaliz
 If you find **JEDI** useful in your research, please consider to cite the following paper:
 
 	  @InProceedings{YaoZhouKDD18,
-	     author={Yao Zhou and Arun Reddy Nelakurthi and Jingrui He},
+		author={Yao Zhou and Arun Reddy Nelakurthi and Jingrui He},
              title={Unlearn What You Have Learned: Adaptive Crowd Teaching with Exponentially Decayed Memory Learners},
              booktitle={KDD},
              year={2018}
