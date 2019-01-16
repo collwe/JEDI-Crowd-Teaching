@@ -13,9 +13,10 @@ If you find **JEDI** useful in your research, please consider to cite the follow
 
 	  @InProceedings{YaoZhouKDD18,
 		author={Yao Zhou and Arun Reddy Nelakurthi and Jingrui He},
-             title={Unlearn What You Have Learned: Adaptive Crowd Teaching with Exponentially Decayed Memory Learners},
-             booktitle={KDD},
-             year={2018}
+		title={Unlearn What You Have Learned: Adaptive Crowd Teaching with Exponentially Decayed Memory Learners},
+		booktitle={KDD},
+		pages={2817--2826},
+		year={2018}
 	  }
 
 
