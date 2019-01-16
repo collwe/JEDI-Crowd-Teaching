@@ -9,7 +9,7 @@ We propose an adaptive teaching framework named JEDI to construct the personaliz
 - Django/Python implementation of the JEDI adaptive web interface for real human learners.
 
 ### Reference
-If you find **JEDI** useful in your research, please consider to cite the following paper:
+If you find that **JEDI** is helpful in your research, please consider to cite our paper:
 
 	  @InProceedings{YaoZhouKDD18,
 		author={Yao Zhou and Arun Reddy Nelakurthi and Jingrui He},
